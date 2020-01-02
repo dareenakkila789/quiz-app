@@ -12,6 +12,45 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.logo {
+  
+  height: 50%;
+  width: 20%;
+  
+}
+.App {
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #4FA9FE;
+  
+}
+.divstyle {
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+  
+  
+}
+
+.navbar{
+  border: 2px solid red;
+  border-radius: 4px;
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+.navbutton{
+  
+
+  transform: translateY(4px);
+
+  border-radius: 8px;
+  background-color:white;
+  margin: 15px 15px;
+  text-align: center;
+}
 
 .App-header {
   background-color: #282c34;
