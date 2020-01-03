@@ -17,7 +17,9 @@ class login extends Component{
             email:e.target.value
         })
     }
-    handlePasswrodChange = (e)=>{
+
+   
+    handlePasswordChange = (e)=>{
         this.setState({
             password:e.target.value
         })
@@ -50,6 +52,7 @@ class login extends Component{
           <input className='navbar' defaultValue={email} placeholder="enter ur email"  onChange={this.handleEmailChange}/>
                 <input className='navbar' defaultValue={password} type='password' placeholder="enter ur passoword" onChange={this.handlePasswrodChange}/>
                 <button className='navbutton' onClick ={this.signin} >Add</button>
+
                 <NavLink to='signup'>You don't have an account?</NavLink>
               
             </div>

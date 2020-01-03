@@ -5,6 +5,7 @@ import Login from './components/login'
 import SignUp from './components/signup'
 import error from './components/error'
 import Navigation from './components/navigation'
+import Profile from './components/profile'
 
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 
@@ -16,9 +17,11 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom'
           <div >
           <Navigation/>
           <Switch>
-          
-          <Route exact path='/login' component={Login}/>
+
+          <Route exact path='/' component={Login}/>
           <Route exact path='/signup' component={SignUp}/>
+          <Route exact path='/profile' component={Profile}/>
+         
           <Route component={error}/>
           
           </Switch>

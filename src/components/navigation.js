@@ -5,7 +5,7 @@ import {NavLink} from 'react-router-dom'
 const error=() => {
     return(
         <div>
-            <NavLink to='login'>Here to log in!</NavLink>
+            <NavLink to='/'>Here to log in!</NavLink>
             
         </div>
 
