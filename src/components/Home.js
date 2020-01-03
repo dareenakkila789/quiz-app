@@ -21,7 +21,7 @@ const useStyles = {
 };
 const GreenCheckbox = withStyles({
 })(props => <Checkbox color="default" {...props} />);
-class App extends Component{  
+class Home extends Component{  
   state = {
     text: ""
   };
@@ -29,7 +29,7 @@ class App extends Component{
     alert("Button pressed!");
       firebase
         .database()
-        .ref("people")
+        .ref("captions")
         .push({ name: this.state.text });
     
   };
@@ -56,4 +56,4 @@ class App extends Component{
     
   );
 }}
-export default App;
+export default Home;
