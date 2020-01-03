@@ -12,6 +12,7 @@ class login extends Component{
 
     }
     handleEmailChange = (e)=>{
+
         this.setState({
             email:e.target.value
         })

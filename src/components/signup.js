@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import * as firebase from 'firebase'
-class signUp extends Component {
+
+ class signUp extends Component{
     state = {
-        list: [],
-        email: '',
-        password: ''
+        list:[],
+        email:'',
+        passoword:''
 
     }
-    handleEmailChange = (e) => {
+
+    handlePasswrodChange = (e)=>{
         this.setState({
             email: e.target.value
         })
@@ -56,6 +58,7 @@ class signUp extends Component {
                 <input className='navbar' defaultValue={email} placeholder="enter ur email" onChange={this.handleEmailChange} />
                 <input className='navbar' defaultValue={password} type='password' placeholder="enter ur passoword" onChange={this.handlePasswrodChange} />
                 <button className='navbutton' onClick={this.addUser} >Create</button>
+
             </div>
         );
     }
