@@ -12,6 +12,58 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.logo {
+  
+  height: 50%;
+  width: 20%;
+  
+}
+.App {
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background-color: #4FA9FE;
+  
+}
+.divstyle {
+  align-items: center;
+  align-content: center;
+  height: 100%;
+  width: 100%;
+  
+  
+}
+.btn-primary {
+  display: inline-block;
+  text-decoration: none;
+  letter-spacing: var(--mainSpacing);
+  color: var(--mainBlack);
+  background: var(--primaryColor);
+  padding: 0.4rem 0.9rem;
+  border: 3px solid var(--primaryColor);
+  transition: var(--mainTransition);
+  text-transform: uppercase;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-top: 10px;
+}
+.navbar{
+  border: 2px solid red;
+  border-radius: 4px;
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px 0;
+}
+.navbutton{
+  
+
+  transform: translateY(4px);
+
+  border-radius: 8px;
+  background-color:white;
+  margin: 15px 15px;
+  text-align: center;
+}
 
 .App-header {
   background-color: #282c34;
