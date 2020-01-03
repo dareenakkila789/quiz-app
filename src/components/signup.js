@@ -1,38 +1,63 @@
-import React ,{Component} from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import weblogo from '../weblogo.png'
-
-class login extends Component{
+import * as firebase from 'firebase'
+class signUp extends Component {
     state = {
-        list:[],
-        text:''
+        list: [],
+        email: '',
+        password: ''
+
     }
-    handleChange = (e)=>{
+    handleEmailChange = (e) => {
         this.setState({
-            text:e.target.value
+            email: e.target.value
         })
     }
-    render(){
-        let {text , handleChange} = this.state;
-       
-        return(
+    handlePasswrodChange = (e) => {
+        this.setState({
+            password: e.target.value
+        })
+    }
+
+
+    addUser = () => {
+        const { email, password } = this.state
+
+        firebase.auth()
+            .createUserWithEmailAndPassword(email, password)
+            .catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                console.error(errorCode, errorMessage);
+                // ...
+            })
+        // .then(function(){
+        // db.collection("users").add({
+        //     first: "Ada",
+        //     last: "Lovelace",
+        //     born: 1815
+        // })
+        //     .then(function (docRef) {
+        //         console.log("Document written with ID: ", docRef.id);
+        //     })
+        //     .catch(function (error) {
+        //         console.error("Error adding document: ", error);
+        //     });
+        // });
+
+
+    }
+    render() {
+        let { email, password } = this.state;
+
+        return (
             <div className='divstyle' >
-                 
-                <div className="App">
-          <h1>Welcome</h1>
-          <img className="logo" src ={weblogo} alt= 'logo'/> </div>
-                <h1>Let's create your account!</h1>
-               <div className ='firstinput'><input className='navbar' value={text} placeholder="enter ur email"  onChange={handleChange}/></div> 
-               <div className ='secondinput'> <input className='navbar' type='password' value={text} placeholder="enter ur passoword" onChange={handleChange}/></div>
-                <button className='navbutton'>create</button>
-                
+                <input className='navbar' defaultValue={email} placeholder="enter ur email" onChange={this.handleEmailChange} />
+                <input className='navbar' defaultValue={password} type='password' placeholder="enter ur passoword" onChange={this.handlePasswrodChange} />
+                <button className='navbutton' onClick={this.addUser} >Create</button>
             </div>
-
-
-        )
+        );
     }
 }
-export default login;
-
-
-
+export default signUp;
