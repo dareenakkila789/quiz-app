@@ -1,7 +1,9 @@
 import React ,{Component} from 'react';
+import ReactDOM from 'react-dom';
 import {NavLink} from 'react-router-dom'
 import weblogo from '../weblogo.png'
 import * as firebase from 'firebase'
+import 'firebase/auth'
 
 
 class home extends Component{
@@ -24,6 +26,12 @@ class home extends Component{
         })
     }
 
+    addQues = ()=>{
+        firebase.auth().NEWSTATMENT(this.state.question,
+         this.state.answer)
+    }
+
+
     render(){
         let {question,answer} = this.state;
   
@@ -39,7 +47,7 @@ class home extends Component{
           <div>
           <input className='navbar' defaultValue={question} placeholder="enter ur question"  onChange={this.handleQuestionChange}/>
                <div> <input className='navbar' defaultValue={answer} placeholder="enter the answer" onChange={this.handleAnswerChange}/></div>
-                <button className='navbutton'>Add</button>
+                <button  onClick ={this.addQues} className='navbutton'>Add</button>
                 <button className='navbutton'>Quiz!</button>
 
                 
