@@ -1,80 +1,54 @@
 import React ,{Component} from 'react';
-
+import {NavLink} from 'react-router-dom'
+import weblogo from '../weblogo.png'
 import * as firebase from 'firebase'
 
-class Home extends Component{
 
-    componentDidMount(){
-        const db = firebase.firestore();
-
-        db.collection("users").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                console.log(`${doc.id} => ${doc.data().first}`);
-            });
-        });
+class home extends Component{
+    state = {
+        question:'',
+        answer:''
 
     }
-    addUser = ()=>{
+    handleQuestionChange = (e)=>{
 
-        const db = firebase.firestore();
-
-
-        firebase.auth().createUserWithEmailAndPassword('reeham@gmail.com',
-         'password').catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-        }).then(function(){
-        db.collection("users").add({
-            first: "Ada",
-            last: "Lovelace",
-            born: 1815
+        this.setState({
+            question:e.target.value
         })
-            .then(function (docRef) {
-                console.log("Document written with ID: ", docRef.id);
-            })
-            .catch(function (error) {
-                console.error("Error adding document: ", error);
-            });
-        });
-
-
     }
 
-
-    signin = ()=>{
-        firebase.auth().signInWithEmailAndPassword('reeham@gmail.com',
-         'password').catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-
-
-            console.log(error)
-            // ...
-        }).then(function(){
-            
-            this.props.history.path('/welcome')
-        });
+   
+    handleAnswerChange = (e)=>{
+        this.setState({
+            answer:e.target.value
+        })
     }
 
     render(){
+        let {question,answer} = this.state;
+  
+       
         return(
+            
+            <div className='divstyle'>
+                
+                <div className="App">
+                <h1>Questions reminder!</h1>
+          <img className="logo" src ={weblogo} alt= 'logo'/> </div>
+        
+          <div>
+          <input className='navbar' defaultValue={question} placeholder="enter ur question"  onChange={this.handleQuestionChange}/>
+               <div> <input className='navbar' defaultValue={answer} placeholder="enter the answer" onChange={this.handleAnswerChange}/></div>
+                <button className='navbutton'>Add</button>
+                <button className='navbutton'>Quiz!</button>
 
-            <div>
-                Home page 
-
-                <button onClick={this.addUser}>add user</button>
-
-
-
-                <button onClick={this.signin}>sign in </button>
-
+                
+              
             </div>
+            </div>
+
+
         )
     }
 }
-
-export default Home
-
+export default home;
