@@ -7,7 +7,7 @@ import error from './components/error'
 import Navigation from './components/navigation'
 import Profile from './components/profile'
 import EditProfile from './components/editprofile'
-import home from './components/home'
+import home from './components/mainpage'
 
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 
