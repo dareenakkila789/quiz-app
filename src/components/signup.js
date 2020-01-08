@@ -30,14 +30,7 @@ class signUp extends Component{
         const { email, password } = this.state
 
         firebase.auth()
-            .createUserWithEmailAndPassword(email, password)
-            .catch(function (error) {
-                // Handle Errors here.
-                var errorCode = error.code;
-                var errorMessage = error.message;
-                console.error(errorCode, errorMessage);
-                // ...
-            })
+            .createUserWithEmailAndPassword(email,password)
         }
 
     render(){
@@ -52,7 +45,7 @@ class signUp extends Component{
                <div className ='firstinput'><input className='navbar' defaultValue={email} placeholder="enter ur email"  
           onChange={this.handleEmailChange}/></div> 
                <div className ='secondinput'>  <input className='navbar' defaultValue={password} type='password' placeholder="enter ur password" onChange={this.handlePasswordChange}/></div>
-               <NavLink className='btn-primary' to='/'>create</NavLink>
+                 <button  className='navbutton' onClick={this.addUser}>Create</button>
                 
             </div>
 
