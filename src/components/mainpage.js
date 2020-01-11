@@ -6,36 +6,31 @@ import * as firebase from 'firebase'
 import 'firebase/auth'
 
 
-class home extends Component{
+class mainPage extends Component{
     state = {
         question:'',
         answer:''
 
     }
+
+
     handleQuestionChange = (e)=>{
 
         this.setState({
             question:e.target.value
         })
     }
-
-   
+  
     handleAnswerChange = (e)=>{
         this.setState({
             answer:e.target.value
         })
     }
 
-    addQues = ()=>{
-        firebase.auth().NEWSTATMENT(this.state.question,
-         this.state.answer)
-    }
-
-
+   
     render(){
         let {question,answer} = this.state;
-  
-       
+     
         return(
             
             <div className='divstyle'>
@@ -50,8 +45,7 @@ class home extends Component{
                 <button  onClick ={this.addQues} className='navbutton'>Add</button>
                 <button className='navbutton'>Quiz!</button>
 
-                
-              
+                            
             </div>
             </div>
 
@@ -59,4 +53,4 @@ class home extends Component{
         )
     }
 }
-export default home;
+export default mainPage;
