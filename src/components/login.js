@@ -8,34 +8,31 @@ import * as firebase from 'firebase'
 class login extends Component{
     state = {
         email:'',
-        passoword:''
+        password:''
 
     }
-    handleEmailChange = (e)=>{
+    handleChange = (e)=>{
 
+        let key = e.target.name
         this.setState({
-            email:e.target.value
+            [key]:e.target.value
         })
     }
 
-   
-    handlePasswordChange = (e)=>{
-        this.setState({
-            password:e.target.value
-        })
-    }
-
+ 
     signin = ()=>{
+
+        console.log(this.state ,"this.state")
         firebase.auth().signInWithEmailAndPassword(this.state.email,
-         this.state.password).catch(function (error) {
+         this.state.password).catch( (error)=> {
             // Handle Errors here.
             var errorCode = error.code;
             var errorMessage = error.message;
             console.error(errorCode,errorMessage);
 
-        }).then(function(){
+        }).then(()=>{
             
-            this.props.history.path('/login')
+            this.props.history.push('/mainPage')
         });
     }
     
@@ -51,8 +48,12 @@ class login extends Component{
           <img className="logo" src ={weblogo} alt= 'logo'/> </div>
         
           <div>
-          <input className='navbar' defaultValue={email} placeholder="enter ur email"  onChange={this.handleEmailChange}/>
-                <input className='navbar' defaultValue={password} type='password' placeholder="enter ur passoword" onChange={this.handlePasswrodChange}/>
+          <input className='navbar' defaultValue={email} placeholder="enter ur email"  
+          onChange={this.handleChange} name = 'email'/>
+                <input className='navbar' defaultValue={password} type='password' 
+                placeholder="enter ur passoword" onChange={this.handleChange} name='password'/>
+
+
                 <button className='navbutton' onClick ={this.signin} >Add</button>
 
                 <NavLink to='signup'>You don't have an account?</NavLink>

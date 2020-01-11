@@ -3,42 +3,50 @@ import ReactDOM from 'react-dom';
 import * as firebase from 'firebase'
 import weblogo from '../weblogo.png'
 import {NavLink} from 'react-router-dom'
+
 class signUp extends Component{
     state = {
         list:[],
         email:'',
-        passoword:''
+        password:''
 
     }
 
 
-    handlePasswrodChange = (e) => {
+    handleChange = (e)=>{
+
+        let key = e.target.name
         this.setState({
-            password: e.target.value
+            [key]:e.target.value
         })
     }
-
-
-    handleEmailChange = (e) => {
-        this.setState({
-            email: e.target.value
-        })
-    }
-
 
     addUser = () => {
-        const { email, password } = this.state
-
+        const db = firebase.firestore();
         firebase.auth()
-            .createUserWithEmailAndPassword(email, password)
+            .createUserWithEmailAndPassword(this.state.email,this.state.password). then(()=>{
+                db.collection("users").add({
+                    email :this.state.email,
+                    password : this.state.password,
+                })
+                .then(function () {
+                    console.log("Document successfully written");
+                })
+                .catch(function (error) {
+                    console.error("Error writing document ", error);
+                });
+                                
+
+                this.props.history.push('/mainPage')
+            })
             .catch(function (error) {
                 // Handle Errors here.
                 var errorCode = error.code;
                 var errorMessage = error.message;
-                console.error(errorCode, errorMessage);
+                console.log(error)
                 // ...
             })
-        }
+    }
 
     render(){
         let {email , password} = this.state;
@@ -49,10 +57,11 @@ class signUp extends Component{
           <h1>Welcome</h1>
           <img className="logo" src ={weblogo} alt= 'logo'/> </div>
                 <h1>Let's create your account!</h1>
-               <div className ='firstinput'><input className='navbar' defaultValue={email} placeholder="enter ur email"  
-          onChange={this.handleEmailChange}/></div> 
-               <div className ='secondinput'>  <input className='navbar' defaultValue={password} type='password' placeholder="enter ur password" onChange={this.handlePasswordChange}/></div>
-               <NavLink className='btn-primary' to='/'>create</NavLink>
+               <div className ='firstinput'><input className='navbar' name = 'email'  defaultValue={email} placeholder="enter ur email"  
+          onChange={this.handleChange}/></div> 
+               <div className ='secondinput'>  <input className='navbar' name = 'password' defaultValue={password} type='password' placeholder="enter ur password"
+                onChange={this.handleChange}/></div>
+                 <button  className='navbutton' onClick={this.addUser}>Create</button>
                 
             </div>
 

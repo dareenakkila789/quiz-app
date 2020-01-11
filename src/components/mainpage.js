@@ -6,20 +6,25 @@ import weblogo from '../weblogo.png'
 import * as firebase from 'firebase'
 import 'firebase/auth'
 
-class home extends Component{
+
+class mainPage extends Component{
+
     state = {
         question:'',
         answer:'',
         qs :[]
 
     }
+
     handleChange = (e)=>{
         let key = e.target.name
+
 
         this.setState({
             [key]:e.target.value
         })
     }
+
     addQues = ()=>{
 const db = firebase.firestore();
 
@@ -50,12 +55,16 @@ const db = firebase.firestore();
                 });
                        
                             }
-            
+        
+
+   
     render(){
         let {question,answer,qs} = this.state;
   
        
         console.log(qs)
+     
+
         return(
             
             <div className='divstyle'>
@@ -76,8 +85,7 @@ const db = firebase.firestore();
                 <button  onClick ={this.addQues} className='navbutton'>Add</button>
                 <button className='navbutton' onClick ={this.ReadData}>Quiz!</button>
 
-                
-              
+                            
             </div>
             </div>
 
@@ -85,4 +93,4 @@ const db = firebase.firestore();
         )
     }
 }
-export default home;
+export default mainPage;
