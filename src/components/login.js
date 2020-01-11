@@ -38,8 +38,10 @@ class login extends Component{
             this.props.history.path('/login')
         });
     }
+    
     render(){
         let {email,password} = this.state;
+
   
        
         return(

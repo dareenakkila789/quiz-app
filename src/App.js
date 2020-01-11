@@ -8,6 +8,8 @@ import Navigation from './components/navigation'
 import Profile from './components/profile'
 import EditProfile from './components/editprofile'
 import home from './components/mainpage'
+import quiz from './components/quiz'
+
 
 import {BrowserRouter,Route,Switch} from 'react-router-dom'
 
@@ -17,7 +19,7 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom'
         
           <BrowserRouter>
           <div >
-          <Navigation/>
+          
           <Switch>
 
           <Route exact path='/' component={Login}/>
@@ -25,6 +27,7 @@ import {BrowserRouter,Route,Switch} from 'react-router-dom'
           <Route exact path='/profile' component={Profile}/>
           <Route exact path='/editprofile' component={EditProfile}/>
           <Route exact path='/home' component={home}/>
+          {/* <Route exact path='/quiz' component={quiz}/> */}
 
           <Route component={error}/>
           
