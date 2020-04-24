@@ -13,26 +13,20 @@
   }
 }
 .logo {
-  
   height: 50%;
   width: 20%;
-  
 }
 .App {
   align-items: center;
   height: 100%;
   width: 100%;
-  background-color: #4FA9FE;
-  
+  background-color: #4fa9fe;
 }
 .divstyle {
   align-items: center;
   align-content: center;
   height: 100%;
   width: 100%;
-  
-  
-  
 }
 .btn-primary {
   display: inline-block;
@@ -48,23 +42,49 @@
   margin-left: 30px;
   margin-top: 10px;
 }
-.navbar{
-  border: 2px solid red;
+.queInput {
+  /* border: 2px solid red;
   border-radius: 4px;
   width: 20%;
   padding: 12px 20px;
   margin: 8px 0;
   flex-direction: row;
   display: flex;
-  margin: 17px;
+  margin: 17px; */
+  width: 20%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 3px solid #ccc;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  outline: none;
 }
-.navbutton{
+.allbutton {
+  background-color: white;
+  color: black;
+  border: 2px solid #008cba;
+}
+
+.allbutton:hover {
+  background-color: #008cba;
+  color: white;
+}
+/* .allbutton{
   
 
   transform: translateY(4px);
 
   border-radius: 8px;
   background-color:white;
+  margin: 15px 15px;
+  text-align: center;
+} */
+.ansInput {
+  transform: translateY(4px);
+
+  border-radius: 8px;
+  background-color: white;
   margin: 15px 15px;
   text-align: center;
 }

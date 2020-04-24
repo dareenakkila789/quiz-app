@@ -1,96 +1,130 @@
-import React ,{Component} from 'react';
-import ReactDOM from 'react-dom';
-import {NavLink} from 'react-router-dom'
-import weblogo from '../weblogo.png'
+import React, { Component } from "react";
+import ReactDOM from "react-dom";
+import { NavLink } from "react-router-dom";
+import weblogo from "../weblogo.png";
 
-import * as firebase from 'firebase'
-import 'firebase/auth'
+import * as firebase from "firebase";
+import "firebase/auth";
 
+class mainPage extends Component {
+  state = {
+    question: "",
+    firstOption: "",
+    secondOption: "",
+    thirdOption: "",
+    forthOption: "",
+    correctAnswer: "",
+    qs: [],
+  };
 
-class mainPage extends Component{
+  handleChange = (e) => {
+    let key = e.target.name;
 
-    state = {
-        question:'',
-        answer:'',
-        qs :[]
+    this.setState({
+      [key]: e.target.value,
+    });
+  };
 
-    }
+  addQuest = () => {
+    const db = firebase.firestore();
+    db.collection("questions-answers").add({
+      questions: this.state.question,
+      firstOption: this.state.firstOption,
+      secondOption: this.state.secondOption,
+      thirdOption: this.state.thirdOption,
+      forthOption: this.state.forthOption,
+      correctAnswer: this.state.correctAnswer,
+    });
+  };
 
-    handleChange = (e)=>{
-        let key = e.target.name
+  render() {
+    let {
+      question,
+      answer,
+      qs,
+      firstOption,
+      secondOption,
+      thirdOption,
+      forthOption,
+      correctAnswer,
+    } = this.state;
+    console.log(qs);
 
+    return (
+      <div className="divstyle">
+        <div className="App">
+          <h1>Questions reminder!</h1>
+          <img className="logo" src={weblogo} alt="logo" />{" "}
+        </div>
 
-        this.setState({
-            [key]:e.target.value
-        })
-    }
+        <div>
+          <input
+            className="queInput"
+            defaultValue={question}
+            placeholder="enter ur question"
+            onChange={this.handleChange}
+            name="question"
+          />
+          <input
+            className="queInput"
+            defaultValue={firstOption}
+            placeholder="first option"
+            onChange={this.handleChange}
+            name="firstOption"
+          />
+          <input
+            className="queInput"
+            defaultValue={secondOption}
+            placeholder="second option"
+            onChange={this.handleChange}
+            name="secondOption"
+          />
+          <input
+            className="queInput"
+            defaultValue={thirdOption}
+            placeholder="third option"
+            onChange={this.handleChange}
+            name="thirdOption"
+          />
 
-    addQues = ()=>{
-const db = firebase.firestore();
-
-        db.collection("questions-answers").add({
-            question: this.state.question,
-            answer: this.state.answer,
-        })
-        .then(function() {
-            console.log("Document successfully written!");
-        })
-        .catch(function(error) {
-            console.error("Error writing document: ", error);
-        });
-       
-            }
-            ReadData = ()=>{
-                const db = firebase.firestore();
-                const {qs} = this.state;
-                
-                db.collection("questions-answers").get().then((querySnapshot)=> {
-                    querySnapshot.forEach((doc) =>{
-                      //  console.log(doc.id, " => ", doc.data());
-                        qs.push( doc.data())
-
-                    });
-
-                    this.setState({qs})
-                });
-                       
-                            }
-        
-
-   
-    render(){
-        let {question,answer,qs} = this.state;
-  
-       
-        console.log(qs)
-     
-
-        return(
-            
-            <div className='divstyle'>
-                
-                <div className="App">
-                <h1>Questions reminder!</h1>
-          <img className="logo" src ={weblogo} alt= 'logo'/> </div>
-        
+          <br />
+          <input
+            className="queInput"
+            defaultValue={forthOption}
+            placeholder="forth option"
+            onChange={this.handleChange}
+            name="forthOption"
+          />
+          <input
+            className="queInput"
+            defaultValue={correctAnswer}
+            placeholder="correct answer"
+            onChange={this.handleChange}
+            name="correctAnswer"
+          />
           <div>
-          <input className='navbar' defaultValue={question} placeholder="enter ur question"
-            onChange={this.handleChange} name ='question'/>
-               <div> 
-                   <input className='navbar' defaultValue={answer}
-                    placeholder="enter the answer"  name="answer"
-               onChange={this.handleChange}/>
-               
-               </div>
-                <button  onClick ={this.addQues} className='navbutton'>Add</button>
-                <button className='navbutton' onClick ={this.ReadData}>Quiz!</button>
-
-                            
-            </div>
-            </div>
-
-
-        )
-    }
+            {/* <input
+              className="queInput"
+              defaultValue={answer}
+              placeholder="enter the answer"
+              name="answer"
+              onChange={this.handleChange}
+            /> */}
+          </div>
+          <button onClick={this.addQuest} className="allbutton">
+            Add
+          </button>
+          <button
+            className="allbutton"
+            onClick={() => {
+              this.props.history.push("/quiz");
+            }}
+          >
+            Quiz!
+          </button>
+        </div>
+      </div>
+    );
+  }
 }
 export default mainPage;
