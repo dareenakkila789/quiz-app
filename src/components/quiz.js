@@ -1,14 +1,20 @@
 import React, { Component } from "react";
-// import ReactDOM from 'react-dom';
 import weblogo from "../weblogo.png";
-// import Random from "react-random";
+import userpic from "../user.png";
+import { db, auth } from "../index";
 import { NavLink } from "react-router-dom";
+import { render } from "react-dom";
 import * as firebase from "firebase";
+import { RadioGroup, RadioButton } from "react-radio-buttons";
+import "firebase/auth";
 class quiz extends Component {
   state = {
-    qs: [],
+    questions: null,
+    randques: "",
+    question: "",
     answer: "",
   };
+
   handleChange = (e) => {
     let key = e.target.name;
 
@@ -16,36 +22,52 @@ class quiz extends Component {
       [key]: e.target.value,
     });
   };
-  ReadData = () => {
+  componentDidMount() {
     const db = firebase.firestore();
-    const { qs } = this.state;
-
+    console.log("dareen");
     db.collection("questions-answers")
       .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          //  console.log(doc.id, " => ", doc.data());
-          qs.push(doc.data());
+      .then((snapshot) => {
+        const questions = [];
+        snapshot.forEach((doc) => {
+          const data = doc.data();
+          questions.push(data);
+          console.log(questions);
         });
+        this.setState({ questions: questions });
 
-        this.setState({ qs });
-      });
-  };
-  componentDidMount() {
-    this.ReadData();
+        const { randques } = this.state;
+        const randomQs =
+          questions[Math.floor(Math.random() * questions.length)];
+        console.log("random question =>", randomQs);
+
+        this.setState({ randques: randomQs });
+        // console.log(snapshot);
+      })
+
+      .catch((error) => console.log(error));
   }
-  //  var rand = qs[Math.floor(Math.random() * qs.length)];
+
   render() {
+    let { randques } = this.state;
     return (
       <div>
-        <h1>hi </h1>
-        <input
-          className="ansInput"
-          defaultValue={this.state.answer}
-          placeholder="enter the answer"
-          name="answer"
-          onChange={this.handleChange}
-        />
+        <div>
+          <h1>Let's quiz you!</h1>
+          <hr></hr>
+          <br></br>
+          <h1>{randques.questions}</h1>
+          <form>
+            <input type="radio" name="fruit" value={randques.firstOption} />
+            {randques.firstOption}
+            <input type="radio" name="fruit" value={randques.secondOption} />
+            {randques.secondOption}
+            <input type="radio" name="fruit" value={randques.thirdOption} />
+            {randques.thirdOption}
+            <input type="radio" name="fruit" value={randques.forthOption} />
+            {randques.forthOption}
+          </form>
+        </div>
       </div>
     );
   }

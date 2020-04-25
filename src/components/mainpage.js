@@ -24,7 +24,12 @@ class mainPage extends Component {
       [key]: e.target.value,
     });
   };
-
+  handleSubmit(e) {
+    let { key } = this.state;
+    this.setState({
+      [key]: "",
+    });
+  }
   addQuest = () => {
     const db = firebase.firestore();
     db.collection("questions-answers").add({
@@ -54,10 +59,11 @@ class mainPage extends Component {
       <div className="divstyle">
         <div className="App">
           <h1>Questions reminder!</h1>
-          <img className="logo" src={weblogo} alt="logo" />{" "}
+          <img className="logo" src={weblogo} alt="logo" />
         </div>
 
         <div>
+          {/* <form onSubmit={(this.handleSubmit, this.addQuest)}> */}
           <input
             className="queInput"
             defaultValue={question}
@@ -122,6 +128,7 @@ class mainPage extends Component {
           >
             Quiz!
           </button>
+          {/* </form> */}
         </div>
       </div>
     );

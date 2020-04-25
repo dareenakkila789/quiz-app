@@ -1,16 +1,14 @@
 import React, { Component } from "react";
-import weblogo from "../weblogo.png";
-import userpic from "../user.png";
-import { db, auth } from "../index";
-import { NavLink } from "react-router-dom";
+
 import * as firebase from "firebase";
+import { RadioGroup, RadioButton } from "react-radio-buttons";
 import "firebase/auth";
+
 class editprofile extends Component {
   state = {
     questions: null,
-    question: "",
-    answer: "",
   };
+
   handleChange = (e) => {
     let key = e.target.name;
 
@@ -28,25 +26,29 @@ class editprofile extends Component {
         snapshot.forEach((doc) => {
           const data = doc.data();
           questions.push(data);
+          console.log(questions);
         });
         this.setState({ questions: questions });
+
         // console.log(snapshot);
       })
+
       .catch((error) => console.log(error));
   }
 
   render() {
-    let { username, bio, question, answer } = this.state;
     return (
       <div>
         <div>
-          <h1>here you are</h1>
+          <h1>here your questions!</h1>
+
           {this.state.questions &&
             this.state.questions.map((questions) => {
               return (
                 <div>
-                  <p>{questions.question}</p>
-                  <p>{questions.answer}</p>
+                  <p>{questions.questions}</p>
+                  <li>{questions.correctAnswer}</li>
+                  <hr></hr>
                 </div>
               );
             })}
