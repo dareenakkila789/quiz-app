@@ -1,58 +1,104 @@
 import React, { Component } from "react";
-
+// import ReactDOM from 'react-dom';
+import weblogo from "../weblogo.png";
+import { NavLink } from "react-router-dom";
 import * as firebase from "firebase";
-import { RadioGroup, RadioButton } from "react-radio-buttons";
-import "firebase/auth";
 
-class editprofile extends Component {
+class login extends Component {
+  constructor(props) {
+    super(props);
+  }
   state = {
-    questions: null,
+    email: "",
+    password: "",
   };
 
   handleChange = (e) => {
     let key = e.target.name;
-
     this.setState({
       [key]: e.target.value,
     });
   };
-  componentDidMount() {
-    const db = firebase.firestore();
-    console.log("dareen");
-    db.collection("questions-answers")
-      .get()
-      .then((snapshot) => {
-        const questions = [];
-        snapshot.forEach((doc) => {
-          const data = doc.data();
-          questions.push(data);
-          console.log(questions);
-        });
-        this.setState({ questions: questions });
 
-        // console.log(snapshot);
+  signin = () => {
+    console.log(this.state, "this.state");
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(this.state.email, this.state.password)
+      .catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.error(errorCode, errorMessage);
+        alert("There is something wrong");
       })
+      .then(() => {
+        this.props.history.push("/home");
+      });
+    if (this.state.email === "" || this.state.password === "") {
+      alert("Please Fill Required Fields");
+    }
+  };
+  checkQuestion() {
+    let radios = document.getElementsByName("type");
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) {
+        console.log(radios[i].value);
 
-      .catch((error) => console.log(error));
+        if (radios[i].value === "student") {
+          console.log("student");
+          // alert("Great job!");
+          this.props.history.push("/quiz");
+        } else {
+          console.log("teacher");
+          // alert("Try again!");
+          this.props.history.push("/home");
+        }
+        break;
+      }
+    }
   }
-
   render() {
-    let radioid = this.props.radioid;
-    let { username, bio, question, answer, randques } = this.state;
+    let { email, password } = this.state;
+
     return (
-      <div>
+      <div className="divstyle">
+        <div className="App">
+          <h1>Welcome</h1>
+          <img className="logo" src={weblogo} alt="logo" />{" "}
+        </div>
+
         <div>
-          {this.state.randques &&
-            this.state.randques.map((randques) => {
-              return (
-                <div>
-                  <p>{randques.question}</p>
-                  <p>{randques.answer}</p>
-                </div>
-              );
-            })}
+          <input
+            className="field"
+            defaultValue={email}
+            placeholder="enter ur email"
+            onChange={this.handleChange}
+            name="email"
+          />
+          <input
+            className="field"
+            defaultValue={password}
+            type="password"
+            placeholder="enter ur passoword"
+            onChange={this.handleChange}
+            name="password"
+          />
+          <form>
+            <input type="radio" name="type" value="student" />
+            student
+            <input type="radio" name="type" value="teacher" />
+            teacher
+          </form>
+          <button onClick={this.checkQuestion}> submit</button>
+          <button className="allbutton" onClick={this.signin}>
+            Add
+          </button>
+
+          <NavLink to="signup">You don't have an account?</NavLink>
         </div>
       </div>
     );
   }
 }
+export default login;

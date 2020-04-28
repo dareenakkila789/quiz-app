@@ -7,7 +7,7 @@ import { render } from "react-dom";
 import * as firebase from "firebase";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
 import "firebase/auth";
-class test extends Component {
+class quiz extends Component {
   state = {
     questions: null,
     randques: "",
@@ -18,6 +18,7 @@ class test extends Component {
     super(props);
     this.checkQuestion = this.checkQuestion.bind(this);
   }
+
 
   handleChange = (e) => {
     let key = e.target.name;
@@ -45,11 +46,8 @@ class test extends Component {
         const randomQs =
           questions[Math.floor(Math.random() * questions.length)];
         console.log("random question =>", randomQs);
-        console.log("the answer is =>", randomQs.correctAnswer);
 
         this.setState({ randques: randomQs });
-
-        this.setState({ answer: randomQs.correctAnswer });
         // console.log(snapshot);
       })
 
@@ -57,22 +55,20 @@ class test extends Component {
   }
 
   checkQuestion() {
-    let radios = document.getElementsByName("options");
+    let radios = document.getElementsByName('fruit');
     for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
-        console.log(radios[i].value);
-
-        if (this.state.answer === radios[i].value) {
-          console.log("good");
-          alert("Great job!");
-        } else {
-          console.log("bad");
-          alert("Try again!");
+        if (radios[i].checked) {
+            console.log(radios[i].value)
+            if (this.state.Ans === radios[i].value) {
+              console.log("good")     
+            }
+            else {
+                console.log("bad")
+            }
+            break;
         }
-        break;
-      }
-    }
-  }
+    }  
+}
   render() {
     let { randques } = this.state;
     return (
@@ -83,13 +79,13 @@ class test extends Component {
           <br></br>
           <h1>{randques.questions}</h1>
           <form>
-            <input type="radio" name="options" value={randques.firstOption} />
+            <input type="radio" name="fruit" value={randques.firstOption} />
             {randques.firstOption}
-            <input type="radio" name="options" value={randques.secondOption} />
+            <input type="radio" name="fruit" value={randques.secondOption} />
             {randques.secondOption}
-            <input type="radio" name="options" value={randques.thirdOption} />
+            <input type="radio" name="fruit" value={randques.thirdOption} />
             {randques.thirdOption}
-            <input type="radio" name="options" value={randques.forthOption} />
+            <input type="radio" name="fruit" value={randques.forthOption} />
             {randques.forthOption}
           </form>
           <button onClick={this.checkQuestion}> submit</button>
@@ -97,5 +93,5 @@ class test extends Component {
       </div>
     );
   }
-}
-export default test;
+};
+export default quiz;

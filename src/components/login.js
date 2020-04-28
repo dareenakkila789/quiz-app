@@ -26,10 +26,14 @@ class login extends Component {
         var errorCode = error.code;
         var errorMessage = error.message;
         console.error(errorCode, errorMessage);
+        alert("There is something wrong");
       })
       .then(() => {
         this.props.history.push("/home");
       });
+    if (this.state.email == "" || this.state.password === "") {
+      alert("Please Fill Required Fields");
+    }
   };
 
   render() {

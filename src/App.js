@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import Login from "./components/login";
-// import test from "./components/test";
+import test from "./components/test";
 import SignUp from "./components/signup";
 import error from "./components/error";
 import Navigation from "./components/navigation";
@@ -19,7 +19,7 @@ function App() {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/signup" component={SignUp} />
-          {/* <Route exact path="/test" component={test} /> */}
+          <Route exact path="/test" component={test} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/editprofile" component={EditProfile} />
           <Route exact path="/home" component={home} />

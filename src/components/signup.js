@@ -34,9 +34,10 @@ class signUp extends Component {
           })
           .catch(function (error) {
             console.error("Error writing document ", error);
+            alert("there is something wrong");
           });
 
-        this.props.history.push("/mainPage");
+        this.props.history.push("/");
       })
       .catch(function (error) {
         // Handle Errors here.
