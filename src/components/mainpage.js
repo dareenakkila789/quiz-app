@@ -120,14 +120,14 @@ class mainPage extends Component {
           <button onClick={this.addQuest} className="allbutton">
             Add
           </button>
-          <button
+          {/* <button
             className="allbutton"
             onClick={() => {
               this.props.history.push("/quiz");
             }}
           >
             Quiz!
-          </button>
+          </button> */}
           {/* </form> */}
         </div>
       </div>

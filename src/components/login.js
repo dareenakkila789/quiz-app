@@ -9,6 +9,11 @@ class login extends Component {
     email: "",
     password: "",
   };
+  constructor(props) {
+    super(props);
+    this.checkType = this.checkType.bind(this);
+  }
+
   handleChange = (e) => {
     let key = e.target.name;
     this.setState({
@@ -27,15 +32,37 @@ class login extends Component {
         var errorMessage = error.message;
         console.error(errorCode, errorMessage);
         alert("There is something wrong");
-      })
-      .then(() => {
-        this.props.history.push("/home");
       });
-    if (this.state.email == "" || this.state.password === "") {
+    // .then(() => {
+    //   this.props.history.push("/home");
+    // });
+    if (this.state.email === "" || this.state.password === "") {
       alert("Please Fill Required Fields");
     }
   };
+  checkType() {
+    let radios = document.getElementsByName("type");
+    for (var i = 0; i < radios.length; i++) {
+      if (radios[i].checked) {
+        console.log(radios[i].value);
 
+        if (radios[i].value === "student") {
+          console.log("student");
+          // alert("Great job!");
+          this.props.history.push("/choose");
+        } else {
+          console.log("teacher");
+          // alert("Try again!");
+          this.props.history.push("/home");
+        }
+        break;
+      }
+    }
+  }
+  functionCombined() {
+    this.signin();
+    this.checkType();
+  }
   render() {
     let { email, password } = this.state;
 
@@ -62,8 +89,20 @@ class login extends Component {
             onChange={this.handleChange}
             name="password"
           />
+          <form>
+            <input type="radio" name="type" value="student" />
+            student
+            <input type="radio" name="type" value="teacher" />
+            teacher
+          </form>
 
-          <button className="allbutton" onClick={this.signin}>
+          <button
+            className="allbutton"
+            onClick={() => {
+              this.signin();
+              this.checkType();
+            }}
+          >
             Add
           </button>
 
