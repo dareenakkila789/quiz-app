@@ -1,115 +1,137 @@
 import React, { Component } from "react";
-// import ReactDOM from 'react-dom';
+
+import * as firebase from "firebase";
 import weblogo from "../weblogo.png";
 import { NavLink } from "react-router-dom";
-import * as firebase from "firebase";
+import Paper from "material-ui/Paper";
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import Button from "@material-ui/core/Button";
+import { AuthContext } from "../Auth";
+import { TextField } from "material-ui";
 
-class login extends Component {
+const style7 = {
+  color: "#245",
+  fontSize: 20,
+  fontFamily: "Comic Sans MS",
+};
+
+const style5 = {
+  height: "800%",
+  width: "50%",
+  margin: 20,
+  textAlign: "center",
+  display: "inline-block",
+};
+
+class Login extends Component {
   state = {
     email: "",
     password: "",
+    type: "",
   };
-  constructor(props) {
-    super(props);
-    this.checkType = this.checkType.bind(this);
-  }
+
+  static contextType = AuthContext;
 
   handleChange = (e) => {
     let key = e.target.name;
+
     this.setState({
       [key]: e.target.value,
     });
   };
 
   signin = () => {
-    console.log(this.state, "this.state");
+    const db = firebase.firestore();
+    console.log(this.state.email, this.state.password);
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .catch((error) => {
-        // Handle Errors here.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.error(errorCode, errorMessage);
-        alert("There is something wrong");
-      });
-    // .then(() => {
-    //   this.props.history.push("/home");
-    // });
-    if (this.state.email === "" || this.state.password === "") {
-      alert("Please Fill Required Fields");
-    }
-  };
-  checkType() {
-    let radios = document.getElementsByName("type");
-    for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
-        console.log(radios[i].value);
+      .then((res) => {
+        db.collection("users")
+          .doc(res.user.uid)
+          .get()
+          .then((doc) => {
+            // const data = doc.data();
+            console.log(doc.data().type);
+            const UserType = doc.data().type;
 
-        if (radios[i].value === "student") {
-          console.log("student");
-          // alert("Great job!");
-          this.props.history.push("/choose");
-        } else {
-          console.log("teacher");
-          // alert("Try again!");
-          this.props.history.push("/home");
-        }
-        break;
-      }
-    }
-  }
-  functionCombined() {
-    this.signin();
-    this.checkType();
-  }
+            console.log("the user type is : ", UserType);
+            // console.log(UserId.type);
+            if (UserType === "student") {
+              this.props.history.push("/choose");
+            } else {
+              this.props.history.push("/home");
+            }
+          });
+      })
+      .catch((error) => console.log(error));
+  };
+
   render() {
-    let { email, password } = this.state;
+    const { currentUser } = this.context;
+    if (currentUser) {
+      console.log(currentUser);
+    }
 
     return (
       <div className="divstyle">
-        <div className="App">
-          <h1>Welcome</h1>
-          <img className="logo" src={weblogo} alt="logo" />{" "}
-        </div>
-
-        <div>
-          <input
-            className="field"
-            defaultValue={email}
-            placeholder="enter ur email"
-            onChange={this.handleChange}
-            name="email"
-          />
-          <input
-            className="field"
-            defaultValue={password}
-            type="password"
-            placeholder="enter ur passoword"
-            onChange={this.handleChange}
-            name="password"
-          />
-          <form>
-            <input type="radio" name="type" value="student" />
-            student
-            <input type="radio" name="type" value="teacher" />
-            teacher
-          </form>
-
-          <button
-            className="allbutton"
-            onClick={() => {
-              this.signin();
-              this.checkType();
-            }}
-          >
-            Add
-          </button>
-
-          <NavLink to="signup">You don't have an account?</NavLink>
-        </div>
+        <MuiThemeProvider>
+          <div>
+            <center>
+              <Paper style={style5} zDepth={3}>
+                <div>
+                  <h1 style={style7}>Welcome</h1>
+                  <br></br>
+                  <h1 style={style7}>Here to Login</h1>
+                  <hr></hr>
+                  <br></br>
+                  <img className="logo" src={weblogo} alt="logo" />{" "}
+                  <h4 style={style7}>
+                    This website will help you as a teacher to create Quizes for
+                    your students, and as student it will help you to quiz your
+                    self.{" "}
+                  </h4>
+                  <br></br>
+                  <div>
+                    <TextField
+                      type="email"
+                      name="email"
+                      hintText="Enter your UserEmail"
+                      floatingLabelText="Email"
+                      defaultValue={this.state.email}
+                      onChange={this.handleChange}
+                    />{" "}
+                    <br />
+                    <TextField
+                      type="password"
+                      name="password"
+                      hintText="Enter your Password"
+                      floatingLabelText="Password"
+                      defaultValue={this.state.password}
+                      onChange={this.handleChange}
+                    />{" "}
+                    <br />
+                    <br />
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={this.signin}
+                    >
+                      {" "}
+                      Login{" "}
+                    </Button>
+                    <br></br>
+                    <NavLink style={style7} to="signup">
+                      You don't have an account?
+                    </NavLink>
+                  </div>
+                </div>
+              </Paper>
+            </center>
+          </div>
+        </MuiThemeProvider>
       </div>
     );
   }
 }
-export default login;
+export default Login;

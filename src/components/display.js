@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import * as firebase from "firebase";
-import { RadioGroup, RadioButton } from "react-radio-buttons";
+
 import "firebase/auth";
 
 class display extends Component {
@@ -27,7 +27,9 @@ class display extends Component {
       answer: this.state.answer,
     });
   };
-
+  refreshPage() {
+    window.location.reload();
+  }
   componentDidMount() {
     const db = firebase.firestore();
     console.log("dareen");
@@ -80,7 +82,12 @@ class display extends Component {
             onChange={this.handleChange}
             name="answer"
           />
-          <button onClick={this.addQuest} className="allbutton">
+          <button
+            onClick={() => {
+              this.addQuest();
+            }}
+            className="allbutton"
+          >
             Add
           </button>
           <h1>all the questions!</h1>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 
 import * as firebase from "firebase";
-import { RadioGroup, RadioButton } from "react-radio-buttons";
+
 import "firebase/auth";
 
 class display extends Component {
@@ -21,9 +21,8 @@ class display extends Component {
   };
   addQuest = () => {
     const db = firebase.firestore();
-    db.collection("questions").add({
+    db.collection("questions").doc().collection("myQustions").add({
       question: this.state.question,
-
       answer: this.state.answer,
     });
   };
@@ -47,6 +46,8 @@ class display extends Component {
 
     console.log("dareen");
     db.collection("questions")
+      .doc()
+      .collection("myQuestion")
       .get()
       .then((snapshot) => {
         const Myquestions = [];

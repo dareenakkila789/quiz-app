@@ -1,12 +1,25 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
-import { NavLink } from "react-router-dom";
-import weblogo from "../weblogo.png";
 
+import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+import { RaisedButton, TextField } from "material-ui";
+import Paper from "material-ui/Paper";
 import * as firebase from "firebase";
 import "firebase/auth";
 
-class mainPage extends Component {
+const style = {
+  height: 550,
+  width: 320,
+  padding: 20,
+  margin: "20px 0px 20px 0px",
+};
+const style1 = {
+  margin: "0px 20px 0px 0px",
+};
+const style2 = {
+  color: "white",
+};
+
+class mainPagee extends Component {
   state = {
     question: "",
     firstOption: "",
@@ -24,28 +37,39 @@ class mainPage extends Component {
       [key]: e.target.value,
     });
   };
-  handleSubmit(e) {
-    let { key } = this.state;
-    this.setState({
-      [key]: "",
-    });
-  }
+
   addQuest = () => {
     const db = firebase.firestore();
-    db.collection("questions-answers").add({
-      questions: this.state.question,
-      firstOption: this.state.firstOption,
-      secondOption: this.state.secondOption,
-      thirdOption: this.state.thirdOption,
-      forthOption: this.state.forthOption,
-      correctAnswer: this.state.correctAnswer,
-    });
+    db.collection("questions-answers")
+      .add({
+        questions: this.state.question,
+        firstOption: this.state.firstOption,
+        secondOption: this.state.secondOption,
+        thirdOption: this.state.thirdOption,
+        forthOption: this.state.forthOption,
+        correctAnswer: this.state.correctAnswer,
+      })
+      .then(window.location.reload);
+
+    if (
+      this.state.question === "" ||
+      this.state.firstOption === "" ||
+      this.state.secondOption === "" ||
+      this.state.thirdOption === "" ||
+      this.state.forthOption === "" ||
+      this.state.correctAnswer === ""
+    ) {
+      alert("Please Fill Required Fields");
+    }
   };
+  refreshPage() {
+    window.location.reload();
+  }
 
   render() {
     let {
       question,
-      answer,
+
       qs,
       firstOption,
       secondOption,
@@ -56,82 +80,91 @@ class mainPage extends Component {
     console.log(qs);
 
     return (
-      <div className="divstyle">
-        <div className="App">
-          <h1>Questions reminder!</h1>
-          <img className="logo" src={weblogo} alt="logo" />
-        </div>
-
-        <div>
-          {/* <form onSubmit={(this.handleSubmit, this.addQuest)}> */}
-          <input
-            className="queInput"
-            defaultValue={question}
-            placeholder="enter ur question"
-            onChange={this.handleChange}
-            name="question"
-          />
-          <input
-            className="queInput"
-            defaultValue={firstOption}
-            placeholder="first option"
-            onChange={this.handleChange}
-            name="firstOption"
-          />
-          <input
-            className="queInput"
-            defaultValue={secondOption}
-            placeholder="second option"
-            onChange={this.handleChange}
-            name="secondOption"
-          />
-          <input
-            className="queInput"
-            defaultValue={thirdOption}
-            placeholder="third option"
-            onChange={this.handleChange}
-            name="thirdOption"
-          />
-
-          <br />
-          <input
-            className="queInput"
-            defaultValue={forthOption}
-            placeholder="forth option"
-            onChange={this.handleChange}
-            name="forthOption"
-          />
-          <input
-            className="queInput"
-            defaultValue={correctAnswer}
-            placeholder="correct answer"
-            onChange={this.handleChange}
-            name="correctAnswer"
-          />
+      <div>
+        <MuiThemeProvider>
           <div>
-            {/* <input
-              className="queInput"
-              defaultValue={answer}
-              placeholder="enter the answer"
-              name="answer"
-              onChange={this.handleChange}
-            /> */}
+            <center>
+              <Paper style={style} zDepth={3}>
+                <h1>Create Questions!</h1>
+                <TextField
+                  type="text"
+                  hintText="Question"
+                  floatingLabelText="Question"
+                  onChange={this.handleChange}
+                  defaultValue={question}
+                  ref="Question"
+                  name="question"
+                />{" "}
+                <br />
+                <TextField
+                  type="text"
+                  hintText="Option 1"
+                  floatingLabelText="Option 1"
+                  onChange={this.handleChange}
+                  ref="op1"
+                  defaultValue={firstOption}
+                  name="firstOption"
+                />{" "}
+                <br />
+                <TextField
+                  type="text"
+                  hintText="Option 2"
+                  floatingLabelText="Option 2"
+                  onChange={this.handleChange}
+                  ref="op2"
+                  defaultValue={secondOption}
+                  name="secondOption"
+                />
+                <br />
+                <TextField
+                  type="text"
+                  hintText="Option 3"
+                  floatingLabelText="Option 3"
+                  onChange={this.handleChange}
+                  ref="op3"
+                  defaultValue={thirdOption}
+                  name="thirdOption"
+                />
+                <br />
+                <TextField
+                  type="text"
+                  hintText="Option 4"
+                  floatingLabelText="Option 4"
+                  onChange={this.handleChange}
+                  ref="op4"
+                  defaultValue={forthOption}
+                  name="forthOption"
+                />
+                <br />
+                <br />
+                <TextField
+                  type="text"
+                  hintText="Answer"
+                  floatingLabelText="Answer"
+                  onChange={this.handleChange}
+                  ref="correctAnswer"
+                  defaultValue={correctAnswer}
+                  name="correctAnswer"
+                />
+                <br />
+                <br />
+                <RaisedButton
+                  primary={true}
+                  onClick={() => {
+                    this.addQuest();
+                    // this.refreshPage();
+                  }}
+                  style={style1}
+                >
+                  <span style={style2}> Add </span>{" "}
+                </RaisedButton>
+              </Paper>
+            </center>
           </div>
-          <button onClick={this.addQuest} className="allbutton">
-            Add
-          </button>
-          {/* <button
-            className="allbutton"
-            onClick={() => {
-              this.props.history.push("/quiz");
-            }}
-          >
-            Quiz!
-          </button> */}
-          {/* </form> */}
-        </div>
+        </MuiThemeProvider>
       </div>
     );
   }
 }
-export default mainPage;
+
+export default mainPagee;

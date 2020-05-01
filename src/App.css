@@ -12,6 +12,78 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.test {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: var(--offWhite);
+  z-index: 200;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  position: static;
+}
+.nav-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+.nav-icon {
+  font-size: 1.5rem;
+  color: var(--primaryColor);
+}
+.nav-links {
+  height: 0;
+  overflow: hidden;
+  transition: var(--mainTransition);
+  list-style-type: none;
+}
+.nav-links a {
+  display: block;
+  text-decoration: none;
+  padding: 1rem 0;
+  color: rgb(83, 42, 3);
+  transition: var(--mainTransition);
+  text-align: center;
+  font-size: 15px;
+  font-family: fantasy;
+  font-weight: 550;
+  letter-spacing: var(--mainSpacing);
+}
+.nav-links a:hover {
+  color: var(--primaryColor);
+}
+
+.show-nav {
+  height: 190px;
+  overflow: visible;
+}
+@media screen and (min-width: 768px) {
+  .nav-btn {
+    display: none;
+  }
+  .nav-center {
+    max-width: 1990px;
+    margin: 0 auto;
+    display: flex;
+    margin-top: 0px;
+  }
+  .nav-links {
+    height: auto;
+    display: flex;
+    margin-left: 8rem;
+    margin-top: 37px;
+  }
+  .nav-links a {
+    margin: 0 1rem;
+    padding: 0.5rem 0;
+  }
+}
 .logo {
   height: 50%;
   width: 20%;
