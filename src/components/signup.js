@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-
 import * as firebase from "firebase";
 import weblogo from "../weblogo.png";
-
 import { TextField } from "material-ui";
 import Paper from "material-ui/Paper";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
@@ -40,15 +38,15 @@ const style5 = {
 
 class signUp extends Component {
   state = {
-    list: [],
     email: "",
-    password: "",
-    type: "",
     username: "",
+    password: "",
+    student_checked: false,
+    teacher_checked: false,
   };
   constructor(props) {
     super(props);
-    this.checkType = this.checkType.bind(this);
+    // this.checkType = this.checkType.bind(this);
   }
 
   handleChange = (e) => {
@@ -57,52 +55,45 @@ class signUp extends Component {
       [key]: e.target.value,
     });
   };
-  checkType() {
-    let radios = document.getElementsByName("type");
-    for (var i = 0; i < radios.length; i++) {
-      if (radios[i].checked) {
-        console.log(radios[i].value);
-        const { type } = this.state;
-        this.setState({ type: radios[i].value });
-        console.log(type);
-        if (radios[i].value === "student") {
-          console.log("student");
-          alert("S");
-          this.props.history.push("/choose");
-        } else {
-          console.log("teacher");
-          alert("T");
-          this.props.history.push("/home");
-        }
-        break;
-      }
-    }
-  }
+
   addUser = () => {
+    const { email, username, type, password } = this.state;
+
     const db = firebase.firestore();
+
+    console.log(email, password, "email,password");
 
     firebase
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .createUserWithEmailAndPassword(email, password)
       .then(() => {
+        let user = firebase.auth().currentUser;
         db.collection("users")
-          .add({
-            email: this.state.email,
-            password: this.state.password,
-            type: this.state.type,
+          .doc(user.uid)
+          .set({
+            Email: email,
+            Username: username,
+            type: type,
           })
-          .then(function () {
-            console.log("Document successfully written");
+          .then((docRef) => {
+            console.log(type);
+            if (type === "student") {
+              this.props.history.push("/choose");
+            } else {
+              this.props.history.push("/home");
+            }
           })
           .catch(function (error) {
-            console.error("Error writing document ", error);
-            alert("there is something wrong");
+            console.error("Error adding document: ", error);
           });
-
-        this.props.history.push("/");
       })
       .catch(function (error) {
         // Handle Errors here.
+        var errorCode = error.code;
+
+        console.log(error);
+        alert(errorCode);
+        // ...
       });
   };
 
@@ -123,20 +114,20 @@ class signUp extends Component {
                   <img className="logo" src={weblogo} alt="logo" />{" "}
                   <div>
                     <TextField
-                      type="text"
-                      name="username"
-                      hintText="Enter your Name"
-                      floatingLabelText="UserName"
-                      defaultValue={username}
+                      type="email"
+                      name="email"
+                      hintText="Enter your UserEmail"
+                      floatingLabelText="Email"
+                      defaultValue={email}
                       onChange={this.handleChange}
                     />{" "}
                     <br />
                     <TextField
-                      type="email"
-                      name="email"
-                      hintText="Enter your Email"
-                      floatingLabelText="Email"
-                      defaultValue={email}
+                      type="text"
+                      name="username"
+                      hintText="Enter your Name"
+                      floatingLabelText="username"
+                      defaultValue={username}
                       onChange={this.handleChange}
                     />{" "}
                     <br />
@@ -155,18 +146,20 @@ class signUp extends Component {
                         <input
                           type="radio"
                           name="type"
+                          defaultValue="op1"
                           value="student"
-                          style={styles.RadioButton}
+                          onChange={this.handleChange}
                         />
                         Student
                       </label>
-                      {/* <br></br> */}
+
                       <label style={style1}>
                         <input
                           type="radio"
                           name="type"
+                          defaultValue="op1"
                           value="teacher"
-                          style={styles.RadioButton}
+                          onChange={this.handleChange}
                         />
                         Teacher
                       </label>

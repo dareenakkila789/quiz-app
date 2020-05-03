@@ -2,40 +2,45 @@ import React, { Component } from "react";
 import "./App.css";
 import Login from "./components/login";
 import didntwork from "./components/didntWork";
-import test from "./components/test";
+// import weblogo from "../weblogo.png";
 import SignUp from "./components/signup";
 import error from "./components/error";
 import test2 from "./components/test2";
 import display from "./components/display";
 import quiz from "./components/quiz";
 import home from "./components/mainpage";
+import first from "./components/first";
 import choose from "./components/choose";
 import { AuthProvider } from "./Auth";
 import PrivateRoute from "./PrivateRoute";
 import { BrowserRouter } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import * as firebase from "firebase";
+import AppBar from "./components/menu";
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <AuthProvider>
+      <AuthProvider>
+        <div>
           <BrowserRouter>
             <Switch>
-              <Route exact path="/" component={Login} />
+              <Route exact path="/" component={AppBar} />
+              <Route exact path="/login" component={Login} />
               <Route exact path="/work" component={didntwork} />
+              <Route exact path="/first" component={first} />
               <Route exact path="/signup" component={SignUp} />
-              <Route exact path="/test" component={test} />
-              <PrivateRoute exact path="/choose" component={choose} />
+              {/* <Route exact path="/test" component={test} /> */}
+              <Route exact path="/choose" component={choose} />
               <Route exact path="/try" component={test2} />
-              <PrivateRoute exact path="/display" component={display} />
-              <PrivateRoute exact path="/home" component={home} />
-              <PrivateRoute exact path="/quiz" component={quiz} />
+              <Route exact path="/display" component={display} />
+              <Route exact path="/home" component={home} />
+              <Route exact path="/quiz" component={quiz} />
               <Route component={error} />
             </Switch>
           </BrowserRouter>
-        </AuthProvider>
-      </div>
+        </div>
+      </AuthProvider>
     );
   }
 }

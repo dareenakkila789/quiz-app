@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-
 import weblogo from "../weblogo.png";
-
 import Paper from "material-ui/Paper";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import Button from "@material-ui/core/Button";
@@ -57,6 +55,7 @@ class choose extends Component {
                       {" "}
                       Revise{" "}
                     </Button>
+
                     <br></br>
                     <br></br>
                     <br></br>

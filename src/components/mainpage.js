@@ -152,7 +152,6 @@ class mainPagee extends Component {
                   primary={true}
                   onClick={() => {
                     this.addQuest();
-                    // this.refreshPage();
                   }}
                   style={style1}
                 >

@@ -1,0 +1,14 @@
+.title {
+  color: #f7d410;
+  font-size: 30px;
+
+  /* font-family: 'Open Sans'; */
+}
+
+.centered {
+  position: absolute;
+  top: 350px;
+
+  left: 60%;
+  transform: translate(-50%, -50%);
+}

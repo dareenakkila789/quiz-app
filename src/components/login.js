@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import * as firebase from "firebase";
 import weblogo from "../weblogo.png";
 import { NavLink } from "react-router-dom";
@@ -42,7 +41,7 @@ class Login extends Component {
 
   signin = () => {
     const db = firebase.firestore();
-    console.log(this.state.email, this.state.password);
+    console.log(this.state.email);
     firebase
       .auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password)
